@@ -1,8 +1,4 @@
-﻿using SelectelSharpCore.Models;
-using System;
-using System.Threading.Tasks;
-using System.Collections.Specialized;
-using System.Net;
+﻿using System.Net;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -19,35 +15,30 @@ namespace SelectelSharpCore.Requests.Container
         /// <param name="containerName">Имя контейнера должно быть меньше 256 символов и не содержать завершающего слеша '/' в конце.</param>
         /// <param name="customHeaders">Произвольные мета-данные через передачу заголовков с префиксом X-Container-Meta-.</param>
         /// <param name="type">X-Container-Meta-Type: Тип контейнера (public, private, gallery)</param>
+        /// <param name="corsHeaders"></param>
         public UpdateContainerMetaRequest(
-            string containerName, 
-            ContainerType type = ContainerType.Private, 
-            IDictionary<string, object> customHeaders = null, 
-            CORSHeaders corsHeaders = null)
+            string containerName,
+            ContainerType type = ContainerType.Private,
+            IDictionary<string, object> customHeaders = null,
+            CorsHeaders corsHeaders = null)
             : base(containerName)
         {
-            customHeaders.Add(HeaderKeys.XContainerMetaType, type.ToString().ToLower());
+            customHeaders?.Add(HeaderKeys.XContainerMetaType, type.ToString().ToLower());
             SetCustomHeaders(customHeaders);
-            SetCORSHeaders(corsHeaders);
+            SetCorsHeaders(corsHeaders);
         }
 
-        internal override HttpMethod Method
-        {
-            get
-            {
-                return HttpMethod.Put;
-            }
-        }
+        internal override HttpMethod Method => HttpMethod.Put;
 
         internal override void Parse(HttpResponseHeaders headers, object data, HttpStatusCode status)
         {
             if (status == HttpStatusCode.Accepted)
             {
-                this.Result = UpdateContainerResult.Updated;
+                Result = UpdateContainerResult.Updated;
             }
             else if (status == HttpStatusCode.Created)
             {
-                this.Result = UpdateContainerResult.Created;
+                Result = UpdateContainerResult.Created;
             }
             else
             {
@@ -59,7 +50,7 @@ namespace SelectelSharpCore.Requests.Container
         {
             if (status == HttpStatusCode.NotFound)
             {
-                this.Result = UpdateContainerResult.NotFound;
+                Result = UpdateContainerResult.NotFound;
             }
             else
             {

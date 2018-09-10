@@ -1,7 +1,5 @@
-﻿using SelectelSharpCore.Common;
-using SelectelSharpCore.Headers;
+﻿using SelectelSharpCore.Headers;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Net.Http.Headers;
 
 namespace SelectelSharpCore.Models.Container
@@ -30,7 +28,7 @@ namespace SelectelSharpCore.Models.Container
         /// Передано байт в контейнер
         /// </summary>
         [Header(HeaderKeys.XReceivedBytes)]
-        public long ReceivedBytes  { get; set; }
+        public long ReceivedBytes { get; set; }
 
         /// <summary>
         /// Тип контейнера
@@ -50,8 +48,7 @@ namespace SelectelSharpCore.Models.Container
         [Header(CustomHeaders = true)]
         public Dictionary<string, string> CustomHeaders { get; set; }
 
-        [Header(CORSHeaders = true)]
-        public CORSHeaders CORSHeaders { get; set; }
+        [Header(CorsHeaders = true)] public CorsHeaders CorsHeaders { get; set; }
 
         public ContainerInfo(HttpResponseHeaders headers)
         {

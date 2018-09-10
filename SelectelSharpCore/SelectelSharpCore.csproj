@@ -13,12 +13,7 @@
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="System.Net.Requests">
-      <HintPath>C:\Users\Михаил\.nuget\packages\system.net.requests\4.3.0\ref\netstandard1.3\System.Net.Requests.dll</HintPath>
-    </Reference>
+    <PackageReference Include="System.Net.Http" Version="4.3.3" />
   </ItemGroup>
 
 </Project>

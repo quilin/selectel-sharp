@@ -23,7 +23,7 @@ namespace SelectelSharpCore.Headers
         /// <summary>
         /// Succeeds if the Last-Modified date of the distant resource is older or the same than the one given in this header.
         /// </summary>
-        public DateTime? IfUnmodifiedSince { get; set; }        
+        public DateTime? IfUnmodifiedSince { get; set; }
 
         public ConditionalHeaders(
             string ifMatch = null,
@@ -31,10 +31,10 @@ namespace SelectelSharpCore.Headers
             DateTime? ifModifiedSince = null,
             DateTime? ifUnmodifiedSince = null)
         {
-            this.IfMatch = ifMatch;
-            this.IfNoneMatch = ifNoneMatch;
-            this.IfModifiedSince = ifModifiedSince;
-            this.IfUnmodifiedSince = ifUnmodifiedSince;
+            IfMatch = ifMatch;
+            IfNoneMatch = ifNoneMatch;
+            IfModifiedSince = ifModifiedSince;
+            IfUnmodifiedSince = ifUnmodifiedSince;
         }
 
         public IDictionary<string, object> GetHeaders()
@@ -51,7 +51,8 @@ namespace SelectelSharpCore.Headers
 
             if (IfUnmodifiedSince.HasValue)
             {
-                TryAddHeader(result, HeaderKeys.IfUnmodifiedSince, IfUnmodifiedSince.Value.ToString(HeaderKeys.DateFormat));
+                TryAddHeader(result, HeaderKeys.IfUnmodifiedSince,
+                    IfUnmodifiedSince.Value.ToString(HeaderKeys.DateFormat));
             }
 
             return result;

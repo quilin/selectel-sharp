@@ -6,7 +6,7 @@ namespace SelectelSharpCore.Requests.File
 {
     public class FileRequest<T> : ContainerRequest<T>
     {
-        const int MAX_FILE_NAME_SIZE = 1024;
+        private const int MaxFileNameSize = 1024;
 
         protected string Path;
         protected string FileName;
@@ -18,25 +18,26 @@ namespace SelectelSharpCore.Requests.File
             var parts = path.Split('/');
             if (parts.Length > 1)
             {
-                this.FileName = parts[parts.Length - 1];
+                FileName = parts[parts.Length - 1];
             }
             else
             {
-                this.FileName = path;
+                FileName = path;
             }
 
             path = Uri.EscapeUriString(path);
-            if (Encoding.UTF8.GetByteCount(path) > MAX_FILE_NAME_SIZE)
+            if (Encoding.UTF8.GetByteCount(path) > MaxFileNameSize)
             {
-                throw new Exception("Полное имя файла (включая виртуальные папки) не должно превышать 1024 байт после URL квотирования.");                
+                throw new Exception(
+                    "Полное имя файла (включая виртуальные папки) не должно превышать 1024 байт после URL квотирования.");
             }
 
-            this.Path = path;
+            Path = path;
         }
 
         protected override string GetUrl(string storageUrl)
         {
-            return string.Format("{0}/{1}/{2}", storageUrl, this.ContainerName, this.Path);
+            return string.Format("{0}/{1}/{2}", storageUrl, ContainerName, Path);
         }
     }
 }

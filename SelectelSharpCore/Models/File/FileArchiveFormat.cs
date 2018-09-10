@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SelectelSharpCore.Models.File
+﻿namespace SelectelSharpCore.Models.File
 {
     public enum FileArchiveFormat
     {
@@ -12,10 +6,12 @@ namespace SelectelSharpCore.Models.File
         /// .tar
         /// </summary>
         Tar,
+
         /// <summary>
         /// .tar.gz
         /// </summary>
         TarGz,
+
         /// <summary>
         /// .tar.bz2
         /// </summary>

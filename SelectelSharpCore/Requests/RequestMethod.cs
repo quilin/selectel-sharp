@@ -2,10 +2,10 @@
 {
     internal enum RequestMethod
     {
-        HEAD,
-        GET,
-        POST,
-        PUT,
-        DELETE
+        Head,
+        Get,
+        Post,
+        Put,
+        Delete
     }
 }

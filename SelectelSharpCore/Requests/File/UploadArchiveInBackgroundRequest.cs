@@ -1,7 +1,5 @@
 ﻿using SelectelSharpCore.Models.File;
 using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -13,14 +11,14 @@ namespace SelectelSharpCore.Requests.File
         private string Path { get; set; }
 
         public UploadArchiveInBackgroundRequest(
-            byte[] file,            
+            byte[] file,
             FileArchiveFormat archiveFormat,
-            string path = null) : base()
+            string path = null)
         {
             SetArchiveFormat(archiveFormat);
-            
-            this.Path = path;
-            this.File = file;
+
+            Path = path;
+            File = file;
         }
 
         private void SetArchiveFormat(FileArchiveFormat archiveFormat)
@@ -44,19 +42,13 @@ namespace SelectelSharpCore.Requests.File
             TryAddQueryParam("extract-archive-v2", format);
         }
 
-        internal override HttpMethod Method
-        {
-            get
-            {
-                return HttpMethod.Put;
-            }
-        }        
+        internal override HttpMethod Method => HttpMethod.Put;
 
         internal override void Parse(HttpResponseHeaders headers, object data, HttpStatusCode status)
         {
             if (status == HttpStatusCode.Created)
             {
-                this.Result = new UploadArchiveResult(headers);
+                Result = new UploadArchiveResult(headers);
             }
             else
             {
@@ -66,7 +58,7 @@ namespace SelectelSharpCore.Requests.File
 
         protected override string GetUrl(string storageUrl)
         {
-            return string.Concat("https://api.selcdn.ru/v1/SEL_", "182815/", this.Path);
+            return string.Concat("https://api.selcdn.ru/v1/SEL_", "182815/", Path);
             //SEL_XXX/[имя контейнера]/?extract-archive-v2=tar.bz2' 
             //var url = storageUrl;
             //if (this.Path != null) {

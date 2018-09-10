@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using SelectelSharpCore.Models.File;
-using System.Collections.Specialized;
+﻿using SelectelSharpCore.Models.File;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -9,24 +7,18 @@ namespace SelectelSharpCore.Requests.File
 {
     public class DeleteFileRequest : FileRequest<DeleteFileResult>
     {
-        public DeleteFileRequest(string containerName, string fileName) 
+        public DeleteFileRequest(string containerName, string fileName)
             : base(containerName, fileName)
         {
         }
 
-        internal override HttpMethod Method
-        {
-            get
-            {
-                return HttpMethod.Delete;;
-            }
-        }
+        internal override HttpMethod Method => HttpMethod.Delete;
 
         internal override void Parse(HttpResponseHeaders headers, object data, HttpStatusCode status)
         {
             if (status == HttpStatusCode.NoContent)
             {
-                this.Result = DeleteFileResult.Deleted;
+                Result = DeleteFileResult.Deleted;
             }
             else
             {
@@ -38,7 +30,7 @@ namespace SelectelSharpCore.Requests.File
         {
             if (status == HttpStatusCode.NotFound)
             {
-                this.Result = DeleteFileResult.NotFound;
+                Result = DeleteFileResult.NotFound;
             }
             else
             {

@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Net;
+﻿using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using SelectelSharpCore.Exceptions;
 using SelectelSharpCore.Models.Container;
 using SelectelSharpCore.Models;
 
@@ -20,20 +19,20 @@ namespace SelectelSharpCore.Requests.Container
         /// <param name="path">Строка, вернуть объекты в указанной папке(виртуальные папки)</param>
         /// <param name="delimeter">Символ, вернуть объекты до указанного разделителя в их имени</param>
         public GetContainerFilesRequest(
-            string containerName, 
-            int limit = 10000, 
+            string containerName,
+            int limit = 10000,
             string marker = null,
             string prefix = null,
             string path = null,
-            string delimeter = null) : 
+            string delimeter = null) :
             base(containerName)
         {
-            this.TryAddQueryParam("limit", limit);
-            this.TryAddQueryParam("marker", marker);
-            this.TryAddQueryParam("prefix", prefix);
-            this.TryAddQueryParam("path", path);
-            this.TryAddQueryParam("delimeter", delimeter);
-            this.TryAddQueryParam("format", "json");
+            TryAddQueryParam("limit", limit);
+            TryAddQueryParam("marker", marker);
+            TryAddQueryParam("prefix", prefix);
+            TryAddQueryParam("path", path);
+            TryAddQueryParam("delimeter", delimeter);
+            TryAddQueryParam("format", "json");
         }
 
         internal override void Parse(HttpResponseHeaders headers, object content, HttpStatusCode status)
@@ -41,7 +40,7 @@ namespace SelectelSharpCore.Requests.Container
             if (status == HttpStatusCode.OK)
             {
                 base.Parse(headers, content, status);
-                this.Result.StorageInfo = new StorageInfo(headers);
+                Result.StorageInfo = new StorageInfo(headers);
             }
             else
             {
@@ -53,7 +52,7 @@ namespace SelectelSharpCore.Requests.Container
         {
             if (status == HttpStatusCode.NotFound)
             {
-                this.Result = null;
+                Result = null;
             }
             else
             {

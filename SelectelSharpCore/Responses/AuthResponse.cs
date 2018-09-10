@@ -1,5 +1,4 @@
-﻿using SelectelSharpCore.Common;
-using SelectelSharpCore.Headers;
+﻿using SelectelSharpCore.Headers;
 
 namespace SelectelSharpCore.Responses
 {

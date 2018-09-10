@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using SelectelSharpCore.Models.Container;
-using System.Collections.Specialized;
+﻿using SelectelSharpCore.Models.Container;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -17,19 +15,13 @@ namespace SelectelSharpCore.Requests.Container
         {
         }
 
-        internal override HttpMethod Method
-        {
-            get
-            {
-                return HttpMethod.Delete;
-            }
-        }
+        internal override HttpMethod Method => HttpMethod.Delete;
 
         internal override void Parse(HttpResponseHeaders headers, object data, HttpStatusCode status)
         {
             if (status == HttpStatusCode.NoContent)
             {
-                this.Result = DeleteContainerResult.Deleted;
+                Result = DeleteContainerResult.Deleted;
             }
             else
             {
@@ -41,11 +33,11 @@ namespace SelectelSharpCore.Requests.Container
         {
             if (status == HttpStatusCode.NotFound)
             {
-                this.Result = DeleteContainerResult.NotFound;
+                Result = DeleteContainerResult.NotFound;
             }
             else if (status == HttpStatusCode.Conflict)
             {
-                this.Result = DeleteContainerResult.NotEmpty;
+                Result = DeleteContainerResult.NotEmpty;
             }
             else
             {

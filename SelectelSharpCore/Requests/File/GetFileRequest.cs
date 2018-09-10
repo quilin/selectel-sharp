@@ -1,8 +1,5 @@
-﻿using System.Collections.Generic;
-using SelectelSharpCore.Headers;
-using SelectelSharpCore.Models;
+﻿using SelectelSharpCore.Headers;
 using SelectelSharpCore.Models.File;
-using System.Collections.Specialized;
 using System.Net;
 using System.Net.Http.Headers;
 
@@ -12,35 +9,24 @@ namespace SelectelSharpCore.Requests.File
     {
         private bool allowAnonymously;
 
-        public GetFileRequest(string containerName, string fileName, ConditionalHeaders conditionalHeaders = null, bool allowAnonymously = false)
+        public GetFileRequest(string containerName, string fileName, ConditionalHeaders conditionalHeaders = null,
+            bool allowAnonymously = false)
             : base(containerName, fileName)
-        {            
+        {
             this.allowAnonymously = allowAnonymously;
 
             SetConditionalHeaders(conditionalHeaders);
         }
 
-        public override bool AllowAnonymously
-        {
-            get
-            {
-                return allowAnonymously;
-            }
-        }
+        public override bool AllowAnonymously => allowAnonymously;
 
-        public override bool DownloadData
-        {
-            get
-            {
-                return true;
-            }
-        }
+        public override bool DownloadData => true;
 
         internal override void Parse(HttpResponseHeaders headers, object data, HttpStatusCode status)
         {
             if (status == HttpStatusCode.OK)
             {
-                this.Result = new GetFileResult((byte[])data, this.FileName, headers);
+                Result = new GetFileResult((byte[]) data, FileName, headers);
             }
             else
             {

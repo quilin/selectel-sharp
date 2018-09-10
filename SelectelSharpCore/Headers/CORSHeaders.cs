@@ -1,12 +1,10 @@
-﻿using SelectelSharpCore.Common;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Net.Http.Headers;
 
 namespace SelectelSharpCore.Headers
 {
-    public class CORSHeaders
+    public class CorsHeaders
     {
         /// <summary>
         /// Cache-Control
@@ -93,9 +91,11 @@ namespace SelectelSharpCore.Headers
         [Header(HeaderKeys.StrictTransportSecurity)]
         public string StrictTransportSecurity { get; set; }
 
-        public CORSHeaders() { }
+        public CorsHeaders()
+        {
+        }
 
-        public CORSHeaders(
+        public CorsHeaders(
             string cacheControl = null,
             DateTime? expires = null,
             string origin = null,
@@ -109,21 +109,21 @@ namespace SelectelSharpCore.Headers
             string contentDisposition = null,
             string strictTransportSecurity = null)
         {
-            this.CacheControl = cacheControl;
-            this.Expires = expires;
-            this.Origin = origin;
-            this.AccessControlAllowOrigin = accessControlAllowOrigin;
-            this.AccessControlMaxAge = accessControlMaxAge;
-            this.AccessControlAllowMethods = accessControlAllowMethods;
-            this.AccessControlAllowCredentials = accessControlAllowCredentials;
-            this.AccessControlExposeHeaders = accessControlExposeHeaders;
-            this.AccessControlRequestHeaders = accessControlRequestHeaders;
-            this.AccessControlRequestMethod = accessControlRequestMethod;
-            this.ContentDisposition = contentDisposition;
-            this.StrictTransportSecurity = strictTransportSecurity;
+            CacheControl = cacheControl;
+            Expires = expires;
+            Origin = origin;
+            AccessControlAllowOrigin = accessControlAllowOrigin;
+            AccessControlMaxAge = accessControlMaxAge;
+            AccessControlAllowMethods = accessControlAllowMethods;
+            AccessControlAllowCredentials = accessControlAllowCredentials;
+            AccessControlExposeHeaders = accessControlExposeHeaders;
+            AccessControlRequestHeaders = accessControlRequestHeaders;
+            AccessControlRequestMethod = accessControlRequestMethod;
+            ContentDisposition = contentDisposition;
+            StrictTransportSecurity = strictTransportSecurity;
         }
 
-        public CORSHeaders(HttpResponseHeaders headers)
+        public CorsHeaders(HttpResponseHeaders headers)
         {
             HeaderParsers.ParseHeaders(this, headers);
         }

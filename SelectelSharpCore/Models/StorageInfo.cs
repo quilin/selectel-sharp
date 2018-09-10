@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using SelectelSharpCore.Common;
-using SelectelSharpCore.Headers;
-using System.Collections.Specialized;
+﻿using SelectelSharpCore.Headers;
 using System.Net.Http.Headers;
 
 namespace SelectelSharpCore.Models
@@ -41,7 +38,7 @@ namespace SelectelSharpCore.Models
         [Header(HeaderKeys.XReceivedBytes)]
         public long ReceivedBytes { get; private set; }
 
-        public StorageInfo(HttpResponseHeaders  headers)
+        public StorageInfo(HttpResponseHeaders headers)
         {
             HeaderParsers.ParseHeaders(this, headers);
         }

@@ -1,10 +1,8 @@
-﻿using System.Collections.Generic;
-using SelectelSharpCore.Models;
-using SelectelSharpCore.Models.Container;
-using System.Collections.Specialized;
+﻿using SelectelSharpCore.Models.Container;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using SelectelSharpCore.Exceptions;
 
 namespace SelectelSharpCore.Requests.Container
 {
@@ -19,9 +17,9 @@ namespace SelectelSharpCore.Requests.Container
         /// <param name="marker">Cтрока, результат будет содержать объекты по значению больше указанного маркера (полезно использовать для постраничной навигации и при большом количестве контейнеров)</param>
         public GetContainersRequest(int limit = 10000, string marker = null)
         {
-            this.TryAddQueryParam("limit", limit);
-            this.TryAddQueryParam("marker", marker);
-            this.TryAddQueryParam("format", "json");
+            TryAddQueryParam("limit", limit);
+            TryAddQueryParam("marker", marker);
+            TryAddQueryParam("format", "json");
         }
 
         internal override void Parse(HttpResponseHeaders headers, object content, HttpStatusCode status)
@@ -32,7 +30,7 @@ namespace SelectelSharpCore.Requests.Container
             }
             else if (status == HttpStatusCode.NoContent)
             {
-                this.Result = null;
+                Result = null;
             }
             else
             {

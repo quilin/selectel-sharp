@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net;
 
-namespace SelectelSharpCore
+namespace SelectelSharpCore.Exceptions
 {
     public class SelectelWebException : Exception
     {
@@ -10,14 +10,13 @@ namespace SelectelSharpCore
         public SelectelWebException(HttpStatusCode status, string message)
             : base(message)
         {
-            this.HttpStatus = status;
+            HttpStatus = status;
         }
 
         public SelectelWebException(HttpStatusCode status)
-            : base(string.Format("Запрос возвратил ошибку с кодом {0}.", (int)status))
+            : base(string.Format("Запрос возвратил ошибку с кодом {0}.", (int) status))
         {
-            this.HttpStatus = status;
+            HttpStatus = status;
         }
-
     }
 }

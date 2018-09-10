@@ -14,9 +14,9 @@ namespace SelectelSharpCore
         {
             var result = await ExecuteAsync(new AuthRequest(user, key));
 
-            this.StorageUrl = result.StorageUrl;
-            this.AuthToken = result.AuthToken;
-            this.ExpireAuthToken = result.ExpireAuthToken;
+            StorageUrl = result.StorageUrl;
+            AuthToken = result.AuthToken;
+            ExpireAuthToken = result.ExpireAuthToken;
         }
 
         public async Task<T> ExecuteAsync<T>(BaseRequest<T> request)

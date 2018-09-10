@@ -2,9 +2,9 @@
 
 namespace SelectelSharpCore.Requests.Container
 {
-    public abstract class ContainerRequest<T>: BaseRequest<T>
+    public abstract class ContainerRequest<T> : BaseRequest<T>
     {
-        protected string ContainerName;        
+        protected string ContainerName;
 
         public ContainerRequest(string containerName)
         {
@@ -15,15 +15,16 @@ namespace SelectelSharpCore.Requests.Container
 
             if (containerName.Length > 255 || containerName.EndsWith("/"))
             {
-                throw new ArgumentException("Имя контейнера должно быть меньше 256 символов и не содержать завершающего слеша '/' в конце.");
+                throw new ArgumentException(
+                    "Имя контейнера должно быть меньше 256 символов и не содержать завершающего слеша '/' в конце.");
             }
 
-            this.ContainerName = containerName;
+            ContainerName = containerName;
         }
 
         protected override string GetUrl(string storageUrl)
         {
-            return string.Format("{0}/{1}", storageUrl, this.ContainerName);
+            return string.Format("{0}/{1}", storageUrl, ContainerName);
         }
     }
 }

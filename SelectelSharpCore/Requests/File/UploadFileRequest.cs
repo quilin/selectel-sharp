@@ -2,12 +2,12 @@
 using SelectelSharpCore.Models.File;
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security.Cryptography;
+using System.Threading.Tasks;
 
 namespace SelectelSharpCore.Requests.File
 {
@@ -19,9 +19,10 @@ namespace SelectelSharpCore.Requests.File
             string containerName,
             string fileName,
             byte[] file,
+            Func<long, Task> progress = null,
             bool validateChecksum = false,
             string contentDisposition = null,
-            string contentType = null,            
+            string contentType = null,
             long? deleteAt = null,
             long? deleteAfter = null,
             IDictionary<string, object> customHeaders = null) : base(containerName, fileName)
@@ -38,12 +39,12 @@ namespace SelectelSharpCore.Requests.File
                 TryAddHeader(HeaderKeys.XDeleteAt, deleteAt.Value);
             }
 
-            if (string.IsNullOrEmpty(contentType) == false)
+            if (string.IsNullOrEmpty(contentType))
             {
                 TryAddHeader(HeaderKeys.ContentType, contentType);
             }
 
-            if (string.IsNullOrEmpty(contentDisposition) == false)
+            if (string.IsNullOrEmpty(contentDisposition))
             {
                 TryAddHeader(HeaderKeys.ContentDisposition, contentDisposition);
             }
@@ -52,40 +53,36 @@ namespace SelectelSharpCore.Requests.File
 
             if (validateChecksum)
             {
-                this.ETag = GetETag(file);
-                TryAddHeader(HeaderKeys.ETag, this.ETag);
+                ETag = GetETag(file);
+                TryAddHeader(HeaderKeys.ETag, ETag);
             }
 
-            this.File = file;
+            File = file;
+            Progress = progress;
         }
 
-        internal override HttpMethod Method
-        {
-            get
-            {
-                return HttpMethod.Put;
-            }
-        }
+        internal override HttpMethod Method => HttpMethod.Put;
 
         internal override void Parse(HttpResponseHeaders headers, object data, HttpStatusCode status)
         {
             if (status == HttpStatusCode.Created)
             {
-                if (this.ETag != null)
+                if (ETag != null)
                 {
                     // idk why Selectel's ETag check not working, so check the result once again on client.
-                    if (headers.GetValues(HeaderKeys.ETag).FirstOrDefault().Equals(this.ETag, StringComparison.OrdinalIgnoreCase) == false)
+                    if (headers.GetValues(HeaderKeys.ETag).FirstOrDefault()
+                        .Equals(ETag, StringComparison.OrdinalIgnoreCase) == false)
                     {
-                        this.Result = UploadFileResult.CheckSumValidationFailed;
+                        Result = UploadFileResult.CheckSumValidationFailed;
                         return;
                     }
                 }
 
-                this.Result = UploadFileResult.Created;
+                Result = UploadFileResult.Created;
             }
-            else if ((int)status == 422)
+            else if ((int) status == 422)
             {
-                this.Result = UploadFileResult.CheckSumValidationFailed;
+                Result = UploadFileResult.CheckSumValidationFailed;
             }
             else
             {

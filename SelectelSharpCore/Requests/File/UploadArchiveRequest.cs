@@ -1,8 +1,6 @@
 ﻿using SelectelSharpCore.Headers;
 using SelectelSharpCore.Models.File;
 using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -14,15 +12,15 @@ namespace SelectelSharpCore.Requests.File
         private string Path { get; set; }
 
         public UploadArchiveRequest(
-            byte[] file,            
+            byte[] file,
             FileArchiveFormat archiveFormat,
-            string path = null) : base()
+            string path = null)
         {
             SetArchiveFormat(archiveFormat);
             TryAddHeader(HeaderKeys.Accept, HeaderKeys.AcceptJson);
-            
-            this.Path = path;
-            this.File = file;
+
+            Path = path;
+            File = file;
         }
 
         private void SetArchiveFormat(FileArchiveFormat archiveFormat)
@@ -63,8 +61,9 @@ namespace SelectelSharpCore.Requests.File
         protected override string GetUrl(string storageUrl)
         {
             var url = storageUrl;
-            if (this.Path != null) {
-                url = string.Concat(url, this.Path);
+            if (Path != null)
+            {
+                url = string.Concat(url, Path);
             }
 
             return url;

@@ -18,13 +18,7 @@ namespace SelectelSharpCore.Requests
             TryAddHeader(HeaderKeys.XAuthKey, key);
         }
 
-        public override bool AllowAnonymously
-        {
-            get
-            {
-                return true;
-            }
-        }
+        public override bool AllowAnonymously => true;
 
         protected override string GetUrl(string storageUrl)
         {
@@ -33,7 +27,7 @@ namespace SelectelSharpCore.Requests
 
         internal override void Parse(HttpResponseHeaders headers, object data, HttpStatusCode status)
         {
-            this.Result = HeaderParsers.ParseHeaders<AuthResponse>(headers);
+            Result = HeaderParsers.ParseHeaders<AuthResponse>(headers);
         }
     }
 }

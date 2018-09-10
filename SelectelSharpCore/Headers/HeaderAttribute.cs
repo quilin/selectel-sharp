@@ -2,22 +2,17 @@
 
 namespace SelectelSharpCore.Headers
 {
-    [System.AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = false)]
     sealed class HeaderAttribute : Attribute
     {
-        readonly string headerKey;
-
         public HeaderAttribute(string headerKey = null)
         {
-            this.headerKey = headerKey;            
+            HeaderKey = headerKey;
         }
 
-        public string HeaderKey
-        {
-            get { return headerKey; }
-        }
+        public string HeaderKey { get; }
 
         public bool CustomHeaders { get; set; }
-        public bool CORSHeaders { get; set; }
+        public bool CorsHeaders { get; set; }
     }
 }

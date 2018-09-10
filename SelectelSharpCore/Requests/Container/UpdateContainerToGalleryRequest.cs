@@ -1,13 +1,9 @@
-﻿using System.Collections.Generic;
-using SelectelSharpCore.Common;
+﻿using SelectelSharpCore.Common;
 using SelectelSharpCore.Headers;
 using SelectelSharpCore.Models.Container;
-using System.Collections.Specialized;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Security.Cryptography;
-using System.Text;
 
 namespace SelectelSharpCore.Requests.Container
 {
@@ -23,29 +19,23 @@ namespace SelectelSharpCore.Requests.Container
         {
             if (string.IsNullOrEmpty(password) == false)
             {
-                TryAddHeader(HeaderKeys.XContainerMetaGallerySecret, Helpers.CalculateSHA1(password));
+                TryAddHeader(HeaderKeys.XContainerMetaGallerySecret, Helpers.CalculateSha1(password));
             }
 
             TryAddHeader(HeaderKeys.XContainerMetaType, ContainerType.Gallery.ToString().ToLower());
         }
 
-        internal override HttpMethod Method
-        {
-            get
-            {
-                return HttpMethod.Post;
-            }
-        }
+        internal override HttpMethod Method => HttpMethod.Post;
 
         internal override void Parse(HttpResponseHeaders headers, object data, HttpStatusCode status)
         {
             if (status == HttpStatusCode.Accepted)
             {
-                this.Result = UpdateContainerResult.Updated;
+                Result = UpdateContainerResult.Updated;
             }
             else if (status == HttpStatusCode.Created)
             {
-                this.Result = UpdateContainerResult.Created;
+                Result = UpdateContainerResult.Created;
             }
             else
             {
@@ -57,12 +47,12 @@ namespace SelectelSharpCore.Requests.Container
         {
             if (status == HttpStatusCode.NotFound)
             {
-                this.Result = UpdateContainerResult.NotFound;
+                Result = UpdateContainerResult.NotFound;
             }
             else
             {
                 base.ParseError(null, status);
             }
-        }        
+        }
     }
 }
